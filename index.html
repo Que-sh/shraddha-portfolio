@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Shraddha Chalak's FinTech Portfolio - SQL & PL/SQL Developer, Investment Banking Analyst offering freelance services in Pune, India.">
+  <meta name="keywords" content="SQL Freelancer Pune, FinTech Developer, Investment Banking, Financial Modeling, Data Analytics">
+  <title>Shraddha Chalak - FinTech Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
+  <style>
+    /* Inlined Tailwind CSS (minified, includes used classes only) */
+    :root{--neon-blue:#00B7EB;--neon-green:#00D4B8;--dark-gray:#1A202C;--gray-dark:#2D3748;--gray-medium:#4A5568}
+    *,::before,::after{box-sizing:border-box;border-width:0;border-style:solid;border-color:theme('colors.gray.300')}
+    html{line-height:1.5;-webkit-text-size-adjust:100%;font-family:Inter,sans-serif}
+    body{margin:0;background-color:#1A202C;color:#E2E8F0}
+    h1,h2,h3{font-weight:700}
+    a{color:inherit;text-decoration:none}
+    p{margin:0}
+    button{background-color:transparent;background-image:none}
+    input,textarea{font-family:inherit}
+    .container{width:100%;max-width:1280px;margin-right:auto;margin-left:auto;padding-right:1rem;padding-left:1rem}
+    .max-w-4xl{max-width:56rem}
+    .mx-auto{margin-left:auto;margin-right:auto}
+    .grid{display:grid}
+    .grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}
+    .grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .gap-6{gap:1.5rem}
+    .gap-8{gap:2rem}
+    .flex{display:flex}
+    .flex-col{flex-direction:column}
+    .justify-center{justify-content:center}
+    .justify-between{justify-content:space-between}
+    .items-center{align-items:center}
+    .space-x-4>:not(:last-child){margin-right:1rem}
+    .space-x-6>:not(:last-child){margin-right:1.5rem}
+    .space-y-4>:not(:last-child){margin-bottom:1rem}
+    .space-y-6>:not(:last-child){margin-bottom:1.5rem}
+    .p-3{padding:0.75rem}
+    .p-4{padding:1rem}
+    .p-6{padding:1.5rem}
+    .px-4{padding-left:1rem;padding-right:1rem}
+    .py-3{padding-top:0.75rem;padding-bottom:0.75rem}
+    .py-4{padding-top:1rem;padding-bottom:1rem}
+    .py-16{padding-top:4rem;padding-bottom:4rem}
+    .py-32{padding-top:8rem;padding-bottom:8rem}
+    .mt-2{margin-top:0.5rem}
+    .mt-4{margin-top:1rem}
+    .mt-6{margin-top:1.5rem}
+    .mt-8{margin-top:2rem}
+    .mb-4{margin-bottom:1rem}
+    .mb-6{margin-bottom:1.5rem}
+    .mb-8{margin-bottom:2rem}
+    .max-w-lg{max-width:32rem}
+    .max-w-2xl{max-width:42rem}
+    .text-sm{font-size:0.875rem;line-height:1.25rem}
+    .text-lg{font-size:1.125rem;line-height:1.75rem}
+    .text-xl{font-size:1.25rem;line-height:1.75rem}
+    .text-2xl{font-size:1.5rem;line-height:2rem}
+    .text-3xl{font-size:1.875rem;line-height:2.25rem}
+    .text-5xl{font-size:3rem;line-height:1}
+    .font-semibold{font-weight:600}
+    .font-bold{font-weight:700}
+    .font-extrabold{font-weight:800}
+    .text-center{text-align:center}
+    .text-white{color:#fff}
+    .text-gray-200{color:#E2E8F0}
+    .text-gray-300{color:#D1D5DB}
+    .text-gray-400{color:#9CA3AF}
+    .text-gray-900{color:#111827}
+    .text-teal-200{color:#99F6E4}
+    .text-teal-400{color:#2DD4BF}
+    .bg-gray-700{background-color:#4B5563}
+    .bg-gray-800{background-color:#2D3748}
+    .bg-gray-900{background-color:#1F2937}
+    .bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}
+    .from-blue-900{--tw-gradient-from:#1E3A8A;--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to, rgba(30,58,138,0))}
+    .to-teal-500{--tw-gradient-to:#14B8A6}
+    .rounded-lg{border-radius:0.5rem}
+    .rounded-full{border-radius:9999px}
+    .border-2{border-width:2px}
+    .border-transparent{border-color:transparent}
+    .shadow-lg{box-shadow:0 10px 15px -3px rgba(0,0,0,0.1),0 4px 6px -2px rgba(0,0,0,0.05)}
+    .transition{transition-property:all;transition-timing-function:cubic-bezier(0.4,0,0.2,1);transition-duration:150ms}
+    .hover\:text-teal-200:hover{color:#99F6E4}
+    .hover\:underline:hover{text-decoration:underline}
+    .inline-block{display:inline-block}
+    .sticky{position:sticky}
+    .top-0{top:0}
+    .relative{position:relative}
+    .absolute{position:absolute}
+    .z-0{z-index:0}
+    .z-10{z-index:10}
+    .opacity-10{opacity:0.1}
+    .opacity-30{opacity:0.3}
+    .w-full{width:100%}
+    .h-32{height:8rem}
+    .hidden{display:none}
+    @media (min-width:768px){.md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.md\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.md\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
+    /* Custom Styles */
+    body { font-family: 'Inter', sans-serif; background-color: #1A202C; color: #E2E8F0; }
+    .chart-bg { position: relative; overflow: hidden; }
+    .chart-bg canvas { position: absolute; top: 0; left: 0; z-index: 0; opacity: 0.2; }
+    .gradient-btn {
+      background: linear-gradient(to right, #00B7EB, #00D4B8);
+      transition: all 0.3s ease;
+    }
+    .gradient-btn:hover {
+      background: linear-gradient(to right, #0284C7, #059669);
+      transform: scale(1.05);
+    }
+    .card { transition: transform 0.3s ease, box-shadow 0.3s ease; background: #2D3748; }
+    .about-card { border: 2px solid transparent; }
+    .about-card:hover { border-color: #00D4B8; box-shadow: 0 0 15px #00B7EB; transform: scale(1.05); }
+    .flip-card { position: relative; min-height: 220px; overflow: hidden; }
+    .flip-card-inner {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d;
+    }
+    .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
+    .flip-card-front, .flip-card-back {
+      position: absolute; width: 100%; height: 100%; backface-visibility: hidden; padding: 1.5rem; border-radius: 0.5rem;
+    }
+    .flip-card-front { background: #2D3748; z-index: 1; }
+    .flip-card-back { transform: rotateY(180deg); background: #4A5568; z-index: 2; }
+    .badge { border: 2px solid transparent; border-radius: 50%; text-align: center; transition: border-color 0.3s; }
+    .badge:hover { border-color: #00D4B8; box-shadow: 0 0 15px #00B7EB; }
+    .form-input { border: 2px solid transparent; transition: border-color 0.3s; }
+    .form-input:focus { border-color: #00D4B8; outline: none; box-shadow: 0 0 10px #00B7EB; }
+    .ticker { background: #1A202C; overflow: hidden; white-space: nowrap; }
+    .ticker span { display: inline-block; animation: ticker 20s linear infinite; }
+    @keyframes ticker {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeIn { animation: fadeIn 0.5s ease-out; }
+    .filter-btn.active { background: linear-gradient(to right, #00B7EB, #00D4B8); color: white; }
+    .project-grid { align-items: start; }
+    .blog-post { cursor: pointer; }
+    .error { border-color: #EF4444; }
+    .success-message { display: none; color: #00D4B8; text-align: center; }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="bg-gradient-to-r from-blue-900 to-teal-500 text-white p-4 sticky top-0 z-10 shadow-lg">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-2xl font-bold">Shraddha Chalak</h1>
+      <div class="space-x-6">
+        <a href="#home" class="hover:text-teal-200 transition">Home</a>
+        <a href="#about" class="hover:text-teal-200 transition">About</a>
+        <a href="#projects" class="hover:text-teal-200 transition">Projects</a>
+        <a href="#certifications" class="hover:text-teal-200 transition">Certifications</a>
+        <a href="#blog" class="hover:text-teal-200 transition">Blog</a>
+        <a href="#contact" class="hover:text-teal-200 transition">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="home" class="chart-bg py-32 text-center text-white relative">
+    <canvas id="chartCanvas" width="100%" height="100%"></canvas>
+    <div class="container mx-auto px-4 animate-fadeIn relative z-10">
+      <h1 class="text-5xl font-extrabold mb-4">Shraddha Chalak</h1>
+      <p class="text-xl mb-6">SQL & FinTech Developer | Investment Banking Analyst</p>
+      <p class="text-lg max-w-2xl mx-auto">
+        Building innovative FinTech solutions and investment strategies with SQL, Python, and financial expertise. Hire me for freelance projects in Pune!
+      </p>
+      <a href="#contact" class="mt-6 inline-block gradient-btn text-white py-1 px-4 rounded-full">Hire Me</a>
+    </div>
+  </section>
+
+  <!-- About Me Section (Compact Card Grid) -->
+  <section id="about" class="py-16 bg-gray-800">
+    <div class="container mx-auto px-4 animate-fadeIn">
+      <h2 class="text-3xl font-bold text-teal-400 mb-8 text-center">About Me</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="about-card card p-6 rounded-lg shadow-lg">
+          <h3 class="text-lg font-semibold text-teal-400 mb-2">Experience</h3>
+          <p class="text-gray-300 text-sm">
+            <strong>Capgemini</strong> (2023-2025): SQL-based financial systems, equity research.<br>
+            <strong>Forage Internships</strong>: Goldman Sachs (Risk, 2025), J.P. Morgan (Modeling, 2025).
+          </p>
+        </div>
+        <div class="about-card card p-6 rounded-lg shadow-lg">
+          <h3 class="text-lg font-semibold text-teal-400 mb-2">Education</h3>
+          <p class="text-gray-300 text-sm">
+            <strong>MBA FinTech</strong>, Dr. D.Y. Patil, Pune (2023-2025).<br>
+            <strong>BSc Physics</strong>, Fergusson College (2017-2020).
+          </p>
+        </div>
+        <div class="about-card card p-6 rounded-lg shadow-lg">
+          <h3 class="text-lg font-semibold text-teal-400 mb-2">Skills</h3>
+          <p class="text-gray-300 text-sm">
+            SQL, PL-SQL, MySQL, Oracle, Python (Pandas, NumPy), Financial Modeling, Valuation, Tableau, Bloomberg Terminal.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section (Fixed Flip Cards) -->
+  <section id="projects" class="py-16 bg-gray-900 relative">
+    <div class="container mx-auto px-4 animate-fadeIn">
+      <h2 class="text-3xl font-bold text-teal-400 mb-8 text-center">Projects</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 project-grid">
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front card p-6 rounded-lg shadow-lg relative">
+              <canvas class="absolute top-0 left-0 w-full h-full opacity-10" width="100%" height="100%"></canvas>
+              <h3 class="text-xl font-semibold text-teal-400 relative z-10">ESG Trading Platform</h3>
+              <p class="text-gray-300 mt-2 relative z-10">Platform for ESG-compliant investments.</p>
+            </div>
+            <div class="flip-card-back card p-6 rounded-lg">
+              <p class="text-gray-300">Built with SQL and Python for real-time data processing.</p>
+              <p class="text-gray-400 italic">Technologies: MSSQL, Python, Pandas</p>
+            </div>
+          </div>
+        </div>
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front card p-6 rounded-lg shadow-lg relative">
+              <canvas class="absolute top-0 left-0 w-full h-full opacity-10" width="100%" height="100%"></canvas>
+              <h3 class="text-xl font-semibold text-teal-400 relative z-10">UPI Analytics Dashboard</h3>
+              <p class="text-gray-300 mt-2 relative z-10">Real-time UPI transaction monitoring.</p>
+            </div>
+            <div class="flip-card-back card p-6 rounded-lg">
+              <p class="text-gray-300">Used SQL window functions and Tableau for fraud detection.</p>
+              <p class="text-gray-400 italic">Technologies: PostgreSQL, Python, Tableau</p>
+            </div>
+          </div>
+        </div>
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front card p-6 rounded-lg shadow-lg relative">
+              <canvas class="absolute top-0 left-0 w-full h-full opacity-10" width="100%" height="100%"></canvas>
+              <h3 class="text-xl font-semibold text-teal-400 relative z-10">Paytm vs. HDFC Bank</h3>
+              <p class="text-gray-300 mt-2 relative z-10">Equity research and valuation.</p>
+            </div>
+            <div class="flip-card-back card p-6 rounded-lg">
+              <p class="text-gray-300">Comparative financial analysis using DCF and Comps.</p>
+              <p class="text-gray-400 italic">Technologies: Excel, Bloomberg Terminal</p>
+            </div>
+          </div>
+        </div>
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front card p-6 rounded-lg shadow-lg relative">
+              <canvas class="absolute top-0 left-0 w-full h-full opacity-10" width="100%" height="100%"></canvas>
+              <h3 class="text-xl font-semibold text-teal-400 relative z-10">Microfinance Risk Dashboard</h3>
+              <p class="text-gray-300 mt-2 relative z-10">Credit risk analytics for microfinance.</p>
+            </div>
+            <div class="flip-card-back card p-6 rounded-lg">
+              <p class="text-gray-300">Geospatial visuals for financial inclusion.</p>
+              <p class="text-gray-400 italic">Technologies: MSSQL, Python, Power BI</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certifications Section (Circular Badges) -->
+  <section id="certifications" class="py-16 bg-gray-800">
+    <div class="container mx-auto px-4 animate-fadeIn">
+      <h2 class="text-3xl font-bold text-teal-400 mb-8 text-center">Certifications</h2>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="badge card p-6 rounded-full shadow-lg">
+          <h3 class="text-lg font-semibold text-teal-400">Oracle Database</h3>
+          <p class="text-gray-300 text-sm mt-2">2024</p>
+        </div>
+        <div class="badge card p-6 rounded-full shadow-lg">
+          <h3 class="text-lg font-semibold text-teal-400">SEBI Investor</h3>
+          <p class="text-gray-300 text-sm mt-2">2024</p>
+        </div>
+        <div class="badge card p-6 rounded-full shadow-lg">
+          <h3 class="text-lg font-semibold text-teal-400">Goldman Sachs Risk</h3>
+          <p class="text-gray-300 text-sm mt-2">2025</p>
+        </div>
+        <div class="badge card p-6 rounded-full shadow-lg">
+          <h3 class="text-lg font-semibold text-teal-400">J.P. Morgan</h3>
+          <p class="text-gray-300 text-sm mt-2">2025</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog Section (Vertical List) -->
+  <section id="blog" class="py-16 bg-gray-900">
+    <div class="container mx-auto px-4 animate-fadeIn">
+      <h2 class="text-3xl font-bold text-teal-400 mb-8 text-center">Blog & Insights</h2>
+      <div class="flex justify-center space-x-4 mb-6">
+        <button class="filter-btn px-4 py-2 rounded-full bg-gray-700 text-gray-300 hover:gradient-btn transition active" onclick="filterPosts('All')">All</button>
+        <button class="filter-btn px-4 py-2 rounded-full bg-gray-700 text-gray-300 hover:gradient-btn transition" onclick="filterPosts('SQL')">SQL</button>
+        <button class="filter-btn px-4 py-2 rounded-full bg-gray-700 text-gray-300 hover:gradient-btn transition" onclick="filterPosts('FinTech')">FinTech</button>
+        <button class="filter-btn px-4 py-2 rounded-full bg-gray-700 text-gray-300 hover:gradient-btn transition" onclick="filterPosts('Investment')">Investment</button>
+      </div>
+      <div class="flex flex-col space-y-6 max-w-4xl mx-auto" id="blog-posts">
+        <div class="blog-post All SQL card p-6 rounded-lg shadow-lg">
+          <h3 class="text-xl font-semibold text-teal-400">Optimizing SQL Queries for FinTech Scalability</h3>
+          <p class="text-gray-400 text-sm mt-2">July 15, 2025 | SQL</p>
+          <p class="preview-content text-gray-300 mt-2">Optimizing SQL for FinTech scalability</p>
+          <a href="blog/sql-optimization.html" target="_blank" class="read-more text-teal-400 hover:underline mt-4 inline-block">Read More</a>
+        </div>
+        <div class="blog-post All SQL card p-6 rounded-lg shadow-lg">
+          <h3 class="text-xl font-semibold text-teal-400">PL-SQL for Robust Financial Data Pipelines</h3>
+          <p class="text-gray-400 text-sm mt-2">July 18, 2025 | SQL</p>
+          <p class="preview-content text-gray-300 mt-2">PL-SQL powers FinTech data pipelines</p>
+          <a href="blog/plsql-pipelines.html" target="_blank" class="read-more text-teal-400 hover:underline mt-4 inline-block">Read More</a>
+        </div>
+        <div class="blog-post All FinTech card p-6 rounded-lg shadow-lg">
+          <h3 class="text-xl font-semibold text-teal-400">UPI’s Role in India’s Digital Economy</h3>
+          <p class="text-gray-400 text-sm mt-2">July 20, 2025 | FinTech</p>
+          <p class="preview-content text-gray-300 mt-2">UPI drives India’s digital economy</p>
+          <a href="blog/upi-economy.html" target="_blank" class="read-more text-teal-400 hover:underline mt-4 inline-block">Read More</a>
+        </div>
+        <div class="blog-post All FinTech card p-6 rounded-lg shadow-lg">
+          <h3 class="text-xl font-semibold text-teal-400">Blockchain for Secure FinTech Transactions</h3>
+          <p class="text-gray-400 text-sm mt-2">July 22, 2025 | FinTech</p>
+          <p class="preview-content text-gray-300 mt-2">Blockchain enhances FinTech transaction security</p>
+          <a href="blog/blockchain-fintech.html" target="_blank" class="read-more text-teal-400 hover:underline mt-4 inline-block">Read More</a>
+        </div>
+        <div class="blog-post All Investment card p-6 rounded-lg shadow-lg">
+          <h3 class="text-xl font-semibold text-teal-400">Paytm vs. HDFC Bank: A Valuation Study</h3>
+          <p class="text-gray-400 text-sm mt-2">July 25, 2025 | Investment</p>
+          <p class="preview-content text-gray-300 mt-2">Valuation insights for Paytm, HDFC</p>
+          <a href="blog/paytm-hdfc.html" target="_blank" class="read-more text-teal-400 hover:underline mt-4 inline-block">Read More</a>
+        </div>
+        <div class="blog-post All Investment card p-6 rounded-lg shadow-lg">
+          <h3 class="text-xl font-semibold text-teal-400">ESG Investing: Building a Sustainable Portfolio</h3>
+          <p class="text-gray-400 text-sm mt-2">July 28, 2025 | Investment</p>
+          <p class="preview-content text-gray-300 mt-2">ESG reshapes sustainable portfolio building</p>
+          <a href="blog/esg-investing.html" target="_blank" class="read-more text-teal-400 hover:underline mt-4 inline-block">Read More</a>
+        </div>
+      </div>
+      <p class="text-center text-gray-400 mt-8">Discover insights on SQL, FinTech, and investment banking!</p>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-16 bg-gradient-to-r from-blue-900 to-teal-500 text-white relative">
+    <canvas id="particleCanvas" class="absolute top-0 left-0 z-0 opacity-30" width="100%" height="100%"></canvas>
+    <div class="container mx-auto px-4 animate-fadeIn relative z-10">
+      <h2 class="text-3xl font-bold text-white mb-8 text-center">Get in Touch</h2>
+      <div class="max-w-lg mx-auto">
+        <p class="text-gray-200 mb-6 text-center">
+          Need a freelance SQL developer, FinTech analyst, or investment consultant? Let’s collaborate!
+        </p>
+        <div class="space-y-4">
+          <p class="text-gray-200"><strong>Email:</strong> chalakshraddha1616@gmail.com</p>
+          <p class="text-gray-200"><strong>Phone:</strong> +91 8789786905</p>
+          <p class="text-gray-200"><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/shraddha-chalak-338809217" class="underline hover:text-teal-200">linkedin.com/in/shraddha-chalak</a></p>
+          <p class="text-gray-200"><strong>GitHub:</strong> <a href="https://github.com/Que-sh" class="underline hover:text-teal-200">github.com/Que-sh</a></p>
+        </div>
+        <div class="mt-8">
+          <p class="text-gray-200 text-center">Send a message:</p>
+          <form id="contact-form" action="https://formspree.io/f/your-form-id" method="POST" class="mt-4 space-y-4">
+            <input type="text" name="name" id="name" placeholder="Your Name" class="w-full p-3 rounded-lg text-gray-900 form-input">
+            <input type="email" name="email" id="email" placeholder="Your Email" class="w-full p-3 rounded-lg text-gray-900 form-input">
+            <textarea name="message" id="message" placeholder="Your Message" class="w-full p-3 rounded-lg text-gray-900 h-32 form-input"></textarea>
+            <button type="submit" class="gradient-btn text-white py-3 px-8 rounded-lg">Send Message</button>
+            <p id="form-message" class="success-message text-sm"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ticker Footer -->
+  <footer class="ticker py-4 text-gray-400 text-sm">
+    <div class="container mx-auto px-4">
+      <span>FinTech Insights: UPI Transactions +12% YoY | ESG Investments +8% | Paytm Stock +5.2% | HDFC Bank P/E 18.3 |</span>
+    </div>
+  </footer>
+
+  <!-- JavaScript for Chart, Particles, Blog Filter, and Form Handling -->
+  <script>
+    // Chart Animation (Hero)
+    const chartCanvas = document.getElementById('chartCanvas');
+    const ctx = chartCanvas.getContext('2d');
+    chartCanvas.width = window.innerWidth;
+    chartCanvas.height = chartCanvas.parentElement.offsetHeight;
+    let points = Array(50).fill().map(() => Math.random() * chartCanvas.height);
+    function drawChart() {
+      ctx.clearRect(0, 0, chartCanvas.width, chartCanvas.height);
+      ctx.beginPath();
+      ctx.strokeStyle = '#00D4B8';
+      ctx.lineWidth = 2;
+      points = points.map(p => p + (Math.random() - 0.5) * 10);
+      points.forEach((p, i) => ctx.lineTo(i * (chartCanvas.width / 50), p));
+      ctx.stroke();
+      requestAnimationFrame(drawChart);
+    }
+    drawChart();
+
+    // Mini Chart for Project Cards
+    document.querySelectorAll('.flip-card-front canvas').forEach(canvas => {
+      canvas.width = canvas.parentElement.offsetWidth;
+      canvas.height = canvas.parentElement.offsetHeight;
+      const ctx = canvas.getContext('2d');
+      let points = Array(20).fill().map(() => Math.random() * canvas.height);
+      function drawMiniChart() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.beginPath();
+        ctx.strokeStyle = '#00B7EB';
+        ctx.lineWidth = 1;
+        points = points.map(p => p + (Math.random() - 0.5) * 5);
+        points.forEach((p, i) => ctx.lineTo(i * (canvas.width / 20), p));
+        ctx.stroke();
+        requestAnimationFrame(drawMiniChart);
+      }
+      drawMiniChart();
+    });
+
+    // Particle Animation (Contact)
+    const particleCanvas = document.getElementById('particleCanvas');
+    const ptx = particleCanvas.getContext('2d');
+    particleCanvas.width = window.innerWidth;
+    particleCanvas.height = particleCanvas.parentElement.offsetHeight;
+    const particles = Array(50).fill().map(() => ({
+      x: Math.random() * particleCanvas.width,
+      y: Math.random() * particleCanvas.height,
+      vx: (Math.random() - 0.5) * 2,
+      vy: (Math.random() - 0.5) * 2,
+      radius: Math.random() * 3 + 1
+    }));
+    function drawParticles() {
+      ptx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
+      ptx.fillStyle = '#00D4B8';
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0 || p.x > particleCanvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > particleCanvas.height) p.vy *= -1;
+        ptx.beginPath();
+        ptx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ptx.fill();
+      });
+      requestAnimationFrame(drawParticles);
+    }
+    drawParticles();
+
+    // Blog Filter
+    function filterPosts(category) {
+      const posts = document.querySelectorAll('.blog-post');
+      const buttons = document.querySelectorAll('.filter-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      posts.forEach(post => {
+        post.classList.toggle('hidden', !(category === 'All' || post.classList.contains(category)));
+      });
+    }
+
+    // Form Validation and Submission
+    const form = document.getElementById('contact-form');
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const messageInput = document.getElementById('message');
+    const formMessage = document.getElementById('form-message');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Reset error states
+      nameInput.classList.remove('error');
+      emailInput.classList.remove('error');
+      messageInput.classList.remove('error');
+      formMessage.style.display = 'none';
+      formMessage.textContent = '';
+
+      // Validate inputs
+      let isValid = true;
+      if (!nameInput.value.trim()) {
+        nameInput.classList.add('error');
+        isValid = false;
+      }
+      if (!emailInput.value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
+        emailInput.classList.add('error');
+        isValid = false;
+      }
+      if (!messageInput.value.trim()) {
+        messageInput.classList.add('error');
+        isValid = false;
+      }
+
+      if (!isValid) {
+        formMessage.style.display = 'block';
+        formMessage.textContent = 'Please fill out all fields correctly.';
+        return;
+      }
+
+      // Prepare form data
+      const formData = new FormData(form);
+      const name = formData.get('name');
+      const email = formData.get('email');
+      const message = formData.get('message');
+
+      try {
+        // Submit to Formspree for email
+        const emailResponse = await fetch(form.action, {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (emailResponse.ok) {
+          // Open WhatsApp with pre-filled message
+          const whatsappMessage = encodeURIComponent(`New form submission:\nName: ${name}\nEmail: ${email}\nMessage: ${message}`);
+          window.open(`https://api.whatsapp.com/send?phone=918789786905&text=${whatsappMessage}`, '_blank');
+
+          // Show success message
+          formMessage.style.display = 'block';
+          formMessage.textContent = 'Message sent! Please confirm WhatsApp message.';
+          form.reset();
+        } else {
+          throw new Error('Failed to send email.');
+        }
+      } catch (error) {
+        formMessage.style.display = 'block';
+        formMessage.textContent = 'Error sending message. Please try again.';
+      }
+    });
+  </script>
+</body>
+</html>
