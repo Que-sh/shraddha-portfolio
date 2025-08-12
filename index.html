@@ -1,15 +1,53 @@
-<!DOCTYPE html>
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Shraddha Chalak's FinTech Portfolio - SQL & PL/SQL Developer, Investment Banking Analyst offering freelance services in Pune, India.">
-  <meta name="keywords" content="SQL Freelancer Pune, FinTech Developer, Investment Banking, Financial Modeling, Data Analytics">
+  <meta name="description" content="Shraddha Chalak's FinTech Portfolio - SQL & PL/SQL Developer, Investment Banking Analyst in India.">
+  <meta name="keywords" content="SQL Developer Pune, FinTech Analyst, Investment Banking, Financial Modeling, Data Analytics">
   <title>Shraddha Chalak - FinTech Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
   <style>
-    /* Inlined Tailwind CSS (minified, includes used classes only) */
     :root{--neon-blue:#00B7EB;--neon-green:#00D4B8;--dark-gray:#1A202C;--gray-dark:#2D3748;--gray-medium:#4A5568}
     *,::before,::after{box-sizing:border-box;border-width:0;border-style:solid;border-color:theme('colors.gray.300')}
     html{line-height:1.5;-webkit-text-size-adjust:100%;font-family:Inter,sans-serif}
@@ -18,7 +56,6 @@
     a{color:inherit;text-decoration:none}
     p{margin:0}
     button{background-color:transparent;background-image:none}
-    input,textarea{font-family:inherit}
     .container{width:100%;max-width:1280px;margin-right:auto;margin-left:auto;padding-right:1rem;padding-left:1rem}
     .max-w-4xl{max-width:56rem}
     .mx-auto{margin-left:auto;margin-right:auto}
@@ -69,7 +106,6 @@
     .text-gray-200{color:#E2E8F0}
     .text-gray-300{color:#D1D5DB}
     .text-gray-400{color:#9CA3AF}
-    .text-gray-900{color:#111827}
     .text-teal-200{color:#99F6E4}
     .text-teal-400{color:#2DD4BF}
     .bg-gray-700{background-color:#4B5563}
@@ -100,7 +136,6 @@
     .hidden{display:none}
     @media (min-width:768px){.md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.md\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.md\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}}
 
-    /* Custom Styles */
     body { font-family: 'Inter', sans-serif; background-color: #1A202C; color: #E2E8F0; }
     .chart-bg { position: relative; overflow: hidden; }
     .chart-bg canvas { position: absolute; top: 0; left: 0; z-index: 0; opacity: 0.2; }
@@ -127,8 +162,6 @@
     .flip-card-back { transform: rotateY(180deg); background: #4A5568; z-index: 2; }
     .badge { border: 2px solid transparent; border-radius: 50%; text-align: center; transition: border-color 0.3s; }
     .badge:hover { border-color: #00D4B8; box-shadow: 0 0 15px #00B7EB; }
-    .form-input { border: 2px solid transparent; transition: border-color 0.3s; }
-    .form-input:focus { border-color: #00D4B8; outline: none; box-shadow: 0 0 10px #00B7EB; }
     .ticker { background: #1A202C; overflow: hidden; white-space: nowrap; }
     .ticker span { display: inline-block; animation: ticker 20s linear infinite; }
     @keyframes ticker {
@@ -143,8 +176,6 @@
     .filter-btn.active { background: linear-gradient(to right, #00B7EB, #00D4B8); color: white; }
     .project-grid { align-items: start; }
     .blog-post { cursor: pointer; }
-    .error { border-color: #EF4444; }
-    .success-message { display: none; color: #00D4B8; text-align: center; }
   </style>
 </head>
 <body>
@@ -170,13 +201,13 @@
       <h1 class="text-5xl font-extrabold mb-4">Shraddha Chalak</h1>
       <p class="text-xl mb-6">SQL & FinTech Developer | Investment Banking Analyst</p>
       <p class="text-lg max-w-2xl mx-auto">
-        Building innovative FinTech solutions and investment strategies with SQL, Python, and financial expertise. Hire me for freelance projects in Pune!
+        Building innovative FinTech solutions and investment strategies with SQL, Python, and financial expertise. Explore my services!
       </p>
-      <a href="#contact" class="mt-6 inline-block gradient-btn text-white py-1 px-4 rounded-full">Hire Me</a>
+      <a href="#contact" class="mt-6 inline-block gradient-btn text-white py-3 px-8 rounded-full">Hire Me</a>
     </div>
   </section>
 
-  <!-- About Me Section (Compact Card Grid) -->
+  <!-- About Me Section -->
   <section id="about" class="py-16 bg-gray-800">
     <div class="container mx-auto px-4 animate-fadeIn">
       <h2 class="text-3xl font-bold text-teal-400 mb-8 text-center">About Me</h2>
@@ -184,7 +215,8 @@
         <div class="about-card card p-6 rounded-lg shadow-lg">
           <h3 class="text-lg font-semibold text-teal-400 mb-2">Experience</h3>
           <p class="text-gray-300 text-sm">
-            <strong>Capgemini</strong> (2023-2025): SQL-based financial systems, equity research.<br>
+            <strong>Capgemini</strong> (2023-2025): SQL/MSBI Developer on RemSys Remediation Application. Optimized database performance and enhanced few data remediation processes using sql and etl practices, developed SSIS packages for ETL workflows, and led incident resolution for business stakeholders.<br>
+            <strong>New York Jobs CEO Council</strong> (2025, Virtual Internship): Financial Analyst. Conducted financial modeling and market analysis, contributing to investment strategy development.<br>
             <strong>Forage Internships</strong>: Goldman Sachs (Risk, 2025), J.P. Morgan (Modeling, 2025).
           </p>
         </div>
@@ -198,14 +230,14 @@
         <div class="about-card card p-6 rounded-lg shadow-lg">
           <h3 class="text-lg font-semibold text-teal-400 mb-2">Skills</h3>
           <p class="text-gray-300 text-sm">
-            SQL, PL-SQL, MySQL, Oracle, Python (Pandas, NumPy), Financial Modeling, Valuation, Tableau, Bloomberg Terminal.
+            SQL, PL-SQL, MySQL, Oracle, MSBI, SSIS, ETL, Python (Pandas, NumPy), Financial Modeling, Valuation, Tableau, Bloomberg Terminal.
           </p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Projects Section (Fixed Flip Cards) -->
+  <!-- Projects Section -->
   <section id="projects" class="py-16 bg-gray-900 relative">
     <div class="container mx-auto px-4 animate-fadeIn">
       <h2 class="text-3xl font-bold text-teal-400 mb-8 text-center">Projects</h2>
@@ -266,7 +298,7 @@
     </div>
   </section>
 
-  <!-- Certifications Section (Circular Badges) -->
+  <!-- Certifications Section -->
   <section id="certifications" class="py-16 bg-gray-800">
     <div class="container mx-auto px-4 animate-fadeIn">
       <h2 class="text-3xl font-bold text-teal-400 mb-8 text-center">Certifications</h2>
@@ -277,7 +309,7 @@
         </div>
         <div class="badge card p-6 rounded-full shadow-lg">
           <h3 class="text-lg font-semibold text-teal-400">SEBI Investor</h3>
-          <p class="text-gray-300 text-sm mt-2">2024</p>
+          <p class="text-gray-300 text-sm mt-2">2025</p>
         </div>
         <div class="badge card p-6 rounded-full shadow-lg">
           <h3 class="text-lg font-semibold text-teal-400">Goldman Sachs Risk</h3>
@@ -291,7 +323,7 @@
     </div>
   </section>
 
-  <!-- Blog Section (Vertical List) -->
+  <!-- Blog Section -->
   <section id="blog" class="py-16 bg-gray-900">
     <div class="container mx-auto px-4 animate-fadeIn">
       <h2 class="text-3xl font-bold text-teal-400 mb-8 text-center">Blog & Insights</h2>
@@ -313,18 +345,6 @@
           <p class="text-gray-400 text-sm mt-2">July 18, 2025 | SQL</p>
           <p class="preview-content text-gray-300 mt-2">PL-SQL powers FinTech data pipelines</p>
           <a href="blog/plsql-pipelines.html" target="_blank" class="read-more text-teal-400 hover:underline mt-4 inline-block">Read More</a>
-        </div>
-        <div class="blog-post All FinTech card p-6 rounded-lg shadow-lg">
-          <h3 class="text-xl font-semibold text-teal-400">UPI’s Role in India’s Digital Economy</h3>
-          <p class="text-gray-400 text-sm mt-2">July 20, 2025 | FinTech</p>
-          <p class="preview-content text-gray-300 mt-2">UPI drives India’s digital economy</p>
-          <a href="blog/upi-economy.html" target="_blank" class="read-more text-teal-400 hover:underline mt-4 inline-block">Read More</a>
-        </div>
-        <div class="blog-post All FinTech card p-6 rounded-lg shadow-lg">
-          <h3 class="text-xl font-semibold text-teal-400">Blockchain for Secure FinTech Transactions</h3>
-          <p class="text-gray-400 text-sm mt-2">July 22, 2025 | FinTech</p>
-          <p class="preview-content text-gray-300 mt-2">Blockchain enhances FinTech transaction security</p>
-          <a href="blog/blockchain-fintech.html" target="_blank" class="read-more text-teal-400 hover:underline mt-4 inline-block">Read More</a>
         </div>
         <div class="blog-post All Investment card p-6 rounded-lg shadow-lg">
           <h3 class="text-xl font-semibold text-teal-400">Paytm vs. HDFC Bank: A Valuation Study</h3>
@@ -350,23 +370,20 @@
       <h2 class="text-3xl font-bold text-white mb-8 text-center">Get in Touch</h2>
       <div class="max-w-lg mx-auto">
         <p class="text-gray-200 mb-6 text-center">
-          Need a freelance SQL developer, FinTech analyst, or investment consultant? Let’s collaborate!
+          Need an SQL developer, FinTech analyst, or investment consultant? Let’s collaborate!
         </p>
         <div class="space-y-4">
-          <p class="text-gray-200"><strong>Email:</strong> chalakshraddha1616@gmail.com</p>
-          <p class="text-gray-200"><strong>Phone:</strong> +91 8789786905</p>
+          <p class="text-gray-200"><strong>Email:</strong> <a href="mailto:chalakshraddha1616@gmail.com?subject=Portfolio%20Inquiry&body=Hi%20Shraddha,%0D%0AI'm%20interested%20in%20your%20services.%20Please%20provide%20more%20details." class="underline hover:text-teal-200">chalakshraddha1616@gmail.com</a></p>
+          <p class="text-gray-200"><strong>Phone (WhatsApp):</strong> <a href="https://api.whatsapp.com/send?phone=918789786905&text=Hi%20Shraddha,%20I'm%20interested%20in%20your%20services.%20Please%20provide%20more%20details." target="_blank" class="underline hover:text-teal-200">+91 8789786905</a></p>
           <p class="text-gray-200"><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/shraddha-chalak-338809217" class="underline hover:text-teal-200">linkedin.com/in/shraddha-chalak</a></p>
           <p class="text-gray-200"><strong>GitHub:</strong> <a href="https://github.com/Que-sh" class="underline hover:text-teal-200">github.com/Que-sh</a></p>
         </div>
-        <div class="mt-8">
-          <p class="text-gray-200 text-center">Send a message:</p>
-          <form id="contact-form" action="https://formspree.io/f/your-form-id" method="POST" class="mt-4 space-y-4">
-            <input type="text" name="name" id="name" placeholder="Your Name" class="w-full p-3 rounded-lg text-gray-900 form-input">
-            <input type="email" name="email" id="email" placeholder="Your Email" class="w-full p-3 rounded-lg text-gray-900 form-input">
-            <textarea name="message" id="message" placeholder="Your Message" class="w-full p-3 rounded-lg text-gray-900 h-32 form-input"></textarea>
-            <button type="submit" class="gradient-btn text-white py-3 px-8 rounded-lg">Send Message</button>
-            <p id="form-message" class="success-message text-sm"></p>
-          </form>
+        <div class="mt-8 text-center">
+          <p class="text-gray-200">Contact me directly:</p>
+          <div class="mt-4 flex justify-center space-x-4">
+            <a href="mailto:chalakshraddha1616@gmail.com?subject=Portfolio%20Inquiry&body=Hi%20Shraddha,%0D%0AI'm%20interested%20in%20your%20services.%20Please%20provide%20more%20details." class="gradient-btn text-white py-3 px-8 rounded-lg">Send Email</a>
+            <a href="https://api.whatsapp.com/send?phone=918789786905&text=Hi%20Shraddha,%20I'm%20interested%20in%20your%20services.%20Please%20provide%20more%20details." target="_blank" class="gradient-btn text-white py-3 px-8 rounded-lg">Message on WhatsApp</a>
+          </div>
         </div>
       </div>
     </div>
@@ -379,9 +396,7 @@
     </div>
   </footer>
 
-  <!-- JavaScript for Chart, Particles, Blog Filter, and Form Handling -->
   <script>
-    // Chart Animation (Hero)
     const chartCanvas = document.getElementById('chartCanvas');
     const ctx = chartCanvas.getContext('2d');
     chartCanvas.width = window.innerWidth;
@@ -399,7 +414,6 @@
     }
     drawChart();
 
-    // Mini Chart for Project Cards
     document.querySelectorAll('.flip-card-front canvas').forEach(canvas => {
       canvas.width = canvas.parentElement.offsetWidth;
       canvas.height = canvas.parentElement.offsetHeight;
@@ -418,7 +432,6 @@
       drawMiniChart();
     });
 
-    // Particle Animation (Contact)
     const particleCanvas = document.getElementById('particleCanvas');
     const ptx = particleCanvas.getContext('2d');
     particleCanvas.width = window.innerWidth;
@@ -446,7 +459,6 @@
     }
     drawParticles();
 
-    // Blog Filter
     function filterPosts(category) {
       const posts = document.querySelectorAll('.blog-post');
       const buttons = document.querySelectorAll('.filter-btn');
@@ -456,76 +468,6 @@
         post.classList.toggle('hidden', !(category === 'All' || post.classList.contains(category)));
       });
     }
-
-    // Form Validation and Submission
-    const form = document.getElementById('contact-form');
-    const nameInput = document.getElementById('name');
-    const emailInput = document.getElementById('email');
-    const messageInput = document.getElementById('message');
-    const formMessage = document.getElementById('form-message');
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      // Reset error states
-      nameInput.classList.remove('error');
-      emailInput.classList.remove('error');
-      messageInput.classList.remove('error');
-      formMessage.style.display = 'none';
-      formMessage.textContent = '';
-
-      // Validate inputs
-      let isValid = true;
-      if (!nameInput.value.trim()) {
-        nameInput.classList.add('error');
-        isValid = false;
-      }
-      if (!emailInput.value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
-        emailInput.classList.add('error');
-        isValid = false;
-      }
-      if (!messageInput.value.trim()) {
-        messageInput.classList.add('error');
-        isValid = false;
-      }
-
-      if (!isValid) {
-        formMessage.style.display = 'block';
-        formMessage.textContent = 'Please fill out all fields correctly.';
-        return;
-      }
-
-      // Prepare form data
-      const formData = new FormData(form);
-      const name = formData.get('name');
-      const email = formData.get('email');
-      const message = formData.get('message');
-
-      try {
-        // Submit to Formspree for email
-        const emailResponse = await fetch(form.action, {
-          method: 'POST',
-          body: formData,
-          headers: { 'Accept': 'application/json' }
-        });
-
-        if (emailResponse.ok) {
-          // Open WhatsApp with pre-filled message
-          const whatsappMessage = encodeURIComponent(`New form submission:\nName: ${name}\nEmail: ${email}\nMessage: ${message}`);
-          window.open(`https://api.whatsapp.com/send?phone=918789786905&text=${whatsappMessage}`, '_blank');
-
-          // Show success message
-          formMessage.style.display = 'block';
-          formMessage.textContent = 'Message sent! Please confirm WhatsApp message.';
-          form.reset();
-        } else {
-          throw new Error('Failed to send email.');
-        }
-      } catch (error) {
-        formMessage.style.display = 'block';
-        formMessage.textContent = 'Error sending message. Please try again.';
-      }
-    });
   </script>
 </body>
 </html>
